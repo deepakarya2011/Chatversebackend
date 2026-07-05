@@ -104,9 +104,14 @@ io.on("connection", (socket) => {
 const PORT = process.env.PORT || 5000;
 
 server.listen(PORT, () => {
-
     console.log(`Server Running On Port ${PORT}`);
 
+    // Keep server alive - ping every 14 minutes
+    setInterval(() => {
+        fetch(`https://chatversebackend-8flq.onrender.com/`)
+            .then(() => console.log("Self ping - server awake"))
+            .catch(() => console.log("Self ping failed"));
+    }, 14 * 60 * 1000);
 });
 
 export default app;
